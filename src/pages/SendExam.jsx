@@ -5,7 +5,7 @@ import {
 } from 'grommet';
 import { theme } from '../styles/theme';
 import { AppBar } from '../components/AppBar';
-import { subjects } from '../styles/draft';
+import { getSubjects, postExam } from '../service/connectApi';
 
 const defaultValue = {
   title: '',
@@ -14,10 +14,20 @@ const defaultValue = {
   teacher: '',
   link: '',
 };
+
 export default function SendExam() {
   const [value, setValue] = useState(defaultValue);
   const [showMessage, setShowMessage] = useState(false);
   const [teacherOptions, setTeacherOptions] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+
+  useEffect(() => {
+    getSubjects().then((res) => {
+      setSubjects(res.data);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }, []);
 
   useEffect(() => {
     const theSubject = subjects.find((sub) => sub.title === value.subject);
@@ -32,6 +42,15 @@ export default function SendExam() {
     ? 'É necessário preencher todos os campos'
     : undefined;
 
+  function sendExam(body) {
+    if (message) return;
+    postExam(body).then((res) => {
+      console.log(res.status);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
   return (
     <Grommet theme={theme} full>
       <AppBar />
@@ -41,7 +60,6 @@ export default function SendExam() {
             value={value}
             onChange={(nextValue) => {
               setValue(nextValue);
-              console.log('Change ', nextValue);
             }}
             onReset={() => {
               setValue(defaultValue);
@@ -49,29 +67,35 @@ export default function SendExam() {
             }}
             onSubmit={(event) => {
               setShowMessage(!!message);
-              console.log('Submit', event.value, event.touched);
+              sendExam(event.value);
             }}
           >
             <FormField label="Titulo" name="title">
               <TextInput name="title" placeholder="2020.1" />
             </FormField>
+
             <FormField label="Categoria" name="category">
               <Select name="category" options={categoryOptions} />
             </FormField>
+
             <FormField label="Disciplina" name="subject">
               <Select name="subject" options={subjectOptions} />
             </FormField>
+
             <FormField label="Professor(a)" name="teacher">
               <Select name="teacher" options={teacherOptions} />
             </FormField>
-            <FormField label="Link do PDF" name="link">
+
+            <FormField label="Link para o PDF" name="link">
               <TextInput name="link" />
             </FormField>
+
             {showMessage && (
               <Box pad={{ horizontal: 'small' }}>
                 <Text color="status-error">{message}</Text>
               </Box>
             )}
+
             <Box direction="row" justify="between" margin={{ top: 'medium' }}>
               <Button type="reset" label="Reset" />
               <Button type="submit" label="Enviar" primary />
