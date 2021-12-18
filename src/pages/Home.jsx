@@ -4,10 +4,13 @@ import {
   Paragraph, Box, Button, Grommet, Menu,
 } from 'grommet';
 import { Next } from 'grommet-icons';
+import { useNavigate } from 'react-router-dom';
 import { theme } from '../styles/theme';
 import { AppBar } from '../components/AppBar';
 
 export default function Homepage() {
+  const navigate = useNavigate();
+
   return (
     <Grommet theme={theme} full>
       <AppBar />
@@ -51,6 +54,9 @@ export default function Homepage() {
             label="Adicionar prova ao catálogo"
             icon={<Next />}
             reverse
+            onClick={() => {
+              navigate('/send-exam');
+            }}
           />
         </Box>
       </Box>
