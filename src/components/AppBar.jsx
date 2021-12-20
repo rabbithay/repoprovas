@@ -1,7 +1,9 @@
 import React from 'react';
 import { Box, Heading } from 'grommet';
+import { useNavigate } from 'react-router-dom';
 
 export function AppBar(props) {
+  const navigate = useNavigate();
   return (
     <Box
       tag="header"
@@ -14,7 +16,7 @@ export function AppBar(props) {
       style={{ zIndex: '1' }}
       {...props}
     >
-      <Heading levem="3" margin="none">
+      <Heading levem="3" margin="none" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
         RepoProvas
       </Heading>
     </Box>
