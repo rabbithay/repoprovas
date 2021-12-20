@@ -1,7 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable consistent-return */
-/* eslint-disable no-plusplus */
-/* eslint-disable no-loop-func */
 /* eslint-disable no-unreachable-loop */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable max-len */
