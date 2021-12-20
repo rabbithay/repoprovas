@@ -8,22 +8,22 @@ export function postExam(body) {
   return axios.post(`${BASE_URL}/exams`, body);
 }
 
-export function getSubjects() {
-  return axios.get(`${BASE_URL}/subjects`);
+export function getExams() {
+  return axios.get(`${BASE_URL}/exams`);
+}
+
+export function getSubjectsTeachers() {
+  return axios.get(`${BASE_URL}/subjects/teachers`);
+}
+
+export function getSubjectsExams() {
+  return axios.get(`${BASE_URL}/subjects/exams`);
 }
 
 export function getTeachers() {
   return axios.get(`${BASE_URL}/teachers`);
 }
 
-export function getExams() {
-  return axios.get(`${BASE_URL}/exams`);
-}
-
-export function getSubjectById(id) {
-  return axios.get(`${BASE_URL}/subjects/${id}`);
-}
-
-export function getTeacherById(id) {
-  return axios.get(`${BASE_URL}/teachers/${id}`);
+export function getTeachersExams() {
+  return axios.get(`${BASE_URL}/teachers/exams`);
 }

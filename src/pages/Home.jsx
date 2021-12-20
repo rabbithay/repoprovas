@@ -45,8 +45,8 @@ export default function Homepage() {
             }}
             label="Consultar banco de provas"
             items={[
-              { label: 'Por professor', onClick: () => {} },
-              { label: 'Por disciplina', onClick: () => {} },
+              { label: 'Por professor', onClick: () => { navigate('/consultar-provas/professores'); } },
+              { label: 'Por disciplina', onClick: () => { navigate('/consultar-provas/disciplinas'); } },
             ]}
           />
           <Button
@@ -55,7 +55,7 @@ export default function Homepage() {
             icon={<Next />}
             reverse
             onClick={() => {
-              navigate('/send-exam');
+              navigate('/enviar-prova');
             }}
           />
         </Box>
