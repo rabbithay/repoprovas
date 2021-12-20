@@ -5,7 +5,7 @@ import {
 } from 'grommet';
 import { theme } from '../styles/theme';
 import { AppBar } from '../components/AppBar';
-import { getSubjects, postExam } from '../service/connectApi';
+import { getSubjectsTeachers, postExam } from '../service/connectApi';
 
 const defaultValue = {
   title: '',
@@ -22,7 +22,7 @@ export default function SendExam() {
   const [subjects, setSubjects] = useState([]);
 
   useEffect(() => {
-    getSubjects().then((res) => {
+    getSubjectsTeachers().then((res) => {
       setSubjects(res.data);
     }).catch((error) => {
       console.log(error);
@@ -35,6 +35,7 @@ export default function SendExam() {
   }, [value]);
 
   const subjectOptions = subjects;
+  console.log(subjects);
 
   const categoryOptions = ['P1', 'P2', 'P3', '2ch', 'Outras'];
 
