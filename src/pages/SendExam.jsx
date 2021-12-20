@@ -30,11 +30,11 @@ export default function SendExam() {
   }, []);
 
   useEffect(() => {
-    const theSubject = subjects.find((sub) => sub.title === value.subject);
-    setTeacherOptions(theSubject?.teachers.map((teacher) => teacher.name) || []);
+    const theSubject = subjects.find((sub) => sub.title === value.subject.title);
+    setTeacherOptions(theSubject?.teachers || []);
   }, [value]);
 
-  const subjectOptions = subjects.map((sub) => sub.title);
+  const subjectOptions = subjects;
 
   const categoryOptions = ['P1', 'P2', 'P3', '2ch', 'Outras'];
 
@@ -42,8 +42,18 @@ export default function SendExam() {
     ? 'É necessário preencher todos os campos'
     : undefined;
 
-  function sendExam(body) {
+  function sendExam(examInfo) {
     if (message) return;
+    const {
+      title, category, subject, teacher, link,
+    } = examInfo;
+    const body = {
+      title,
+      category,
+      subjectId: subject.id,
+      teacherId: teacher.id,
+      link,
+    };
     postExam(body).then((res) => {
       console.log(res.status);
     }).catch((error) => {
@@ -79,11 +89,11 @@ export default function SendExam() {
             </FormField>
 
             <FormField label="Disciplina" name="subject">
-              <Select name="subject" options={subjectOptions} />
+              <Select name="subject" options={subjectOptions} labelKey="title" valueKey="id" />
             </FormField>
 
             <FormField label="Professor(a)" name="teacher">
-              <Select name="teacher" options={teacherOptions} />
+              <Select name="teacher" options={teacherOptions} labelKey="name" valueKey="id" />
             </FormField>
 
             <FormField label="Link para o PDF" name="link">
