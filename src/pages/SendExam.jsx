@@ -6,6 +6,8 @@ import {
 import { theme } from '../styles/theme';
 import { AppBar } from '../components/AppBar';
 import { getSubjectsTeachers, postExam } from '../service/connectApi';
+import handleError from '../utils/handleError';
+import ModalAlert from '../utils/ModalAlert';
 
 const defaultValue = {
   title: '',
@@ -25,7 +27,7 @@ export default function SendExam() {
     getSubjectsTeachers().then((res) => {
       setSubjects(res.data);
     }).catch((error) => {
-      console.log(error);
+      handleError(error);
     });
   }, []);
 
@@ -35,7 +37,6 @@ export default function SendExam() {
   }, [value]);
 
   const subjectOptions = subjects;
-  console.log(subjects);
 
   const categoryOptions = ['P1', 'P2', 'P3', '2ch', 'Outras'];
 
@@ -55,10 +56,11 @@ export default function SendExam() {
       teacherId: teacher.id,
       link,
     };
-    postExam(body).then((res) => {
-      console.log(res.status);
+    postExam(body).then(() => {
+      setValue(defaultValue);
+      ModalAlert('Nova prova adicionada com sucesso!');
     }).catch((error) => {
-      console.log(error);
+      handleError(error);
     });
   }
 

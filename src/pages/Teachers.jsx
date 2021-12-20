@@ -7,6 +7,7 @@ import {
 import { theme } from '../styles/theme';
 import { AppBar } from '../components/AppBar';
 import { getTeachersExams } from '../service/connectApi';
+import handleError from '../utils/handleError';
 
 export default function Teachers() {
   const [teacherList, setTeacherList] = useState([]);
@@ -15,7 +16,7 @@ export default function Teachers() {
     getTeachersExams().then((res) => {
       setTeacherList(res.data);
     }).catch((error) => {
-      console.log(error);
+      handleError(error);
     });
   });
 

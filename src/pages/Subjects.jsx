@@ -8,6 +8,7 @@ import {
 import { theme } from '../styles/theme';
 import { AppBar } from '../components/AppBar';
 import { getSubjectsExams } from '../service/connectApi';
+import handleError from '../utils/handleError';
 
 export default function Subjects() {
   const [subjectList, setSubjectList] = useState([]);
@@ -16,7 +17,7 @@ export default function Subjects() {
     getSubjectsExams().then((res) => {
       setSubjectList(res.data);
     }).catch((error) => {
-      console.log(error);
+      handleError(error);
     });
   });
   const array = [1, 2, 3, 4, 5, 6];
