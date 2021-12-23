@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import {
   Box, Form, Grommet, FormField, TextInput, Select, Text, Button,
 } from 'grommet';
+import Swal from 'sweetalert2';
 import { theme } from '../styles/theme';
 import { AppBar } from '../components/AppBar';
 import { getSubjectsTeachers, postExam } from '../service/connectApi';
 import handleError from '../utils/handleError';
-import ModalAlert from '../utils/ModalAlert';
 
 const defaultValue = {
   title: '',
@@ -58,7 +58,7 @@ export default function SendExam() {
     };
     postExam(body).then(() => {
       setValue(defaultValue);
-      ModalAlert('Nova prova adicionada com sucesso!');
+      Swal.fire('Nova prova adicionada com sucesso!');
     }).catch((error) => {
       handleError(error);
     });
