@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const BASE_URL = process.env.NODE_ENV === 'development'
-  ? 'http://localhost:4002'
-  : 'https://repropovas.herokuapp.com';
+  ? `http://localhost:${process.env.REACT_APP_PORT}`
+  : process.env.REACT_APP_API_URL;
 
 export function postExam(body) {
   return axios.post(`${BASE_URL}/exams`, body);
